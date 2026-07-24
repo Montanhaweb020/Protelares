@@ -2,14 +2,14 @@
 <html lang="pt-BR" class="dark-mode">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Protelares - Redes e Telas</title>
     <style>
         /* --- VARIÁVEIS DE COR (MODO ESCURO POR PADRÃO) --- */
         :root {
             --bg-principal: #030712;
             --bg-gradient: radial-gradient(circle at top right, #0b1528, #030712 60%);
-            --bg-card: rgba(17, 24, 39, 0.7);
+            --bg-card: rgba(17, 24, 39, 0.75);
             --bg-subcard: #111827;
             --border-color: #1f2937;
             --text-principal: #f3f4f6;
@@ -27,7 +27,7 @@
         html.light-mode {
             --bg-principal: #f3f4f6;
             --bg-gradient: radial-gradient(circle at top right, #e0e7ff, #f3f4f6 60%);
-            --bg-card: rgba(255, 255, 255, 0.85);
+            --bg-card: rgba(255, 255, 255, 0.9);
             --bg-subcard: #ffffff;
             --border-color: #d1d5db;
             --text-principal: #1f2937;
@@ -59,13 +59,14 @@
             align-items: center;
             background: var(--bg-gradient);
             overflow-x: hidden;
+            width: 100%;
         }
 
         /* --- HEADER / NAV BAR --- */
         header {
             width: 100%;
             max-width: 1200px;
-            padding: 20px;
+            padding: 15px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -77,31 +78,30 @@
         .logo {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             font-weight: bold;
-            font-size: 1.2rem;
-            letter-spacing: 1px;
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
             color: var(--text-titulo);
             text-decoration: none;
         }
 
-        /* --- LOGO CORRIGIDO --- */
         .logo-img {
-            height: 40px;
+            height: 36px;
             width: auto;
             object-fit: contain;
             display: block;
         }
 
         .logo-fallback {
-            width: 40px;
-            height: 40px;
+            width: 36px;
+            height: 36px;
             background: linear-gradient(135deg, #1e3a8a, #3b82f6);
             border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1rem;
+            font-size: 0.9rem;
             font-weight: 800;
             border: 1px solid #60a5fa;
             color: #fff;
@@ -111,15 +111,15 @@
         .nav-right {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
         }
 
         .theme-toggle {
             background: none;
             border: none;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             cursor: pointer;
-            padding: 5px;
+            padding: 4px;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -129,84 +129,83 @@
         .btn-contato {
             background-color: var(--btn-contato-bg);
             color: var(--btn-contato-text);
-            padding: 8px 16px;
+            padding: 7px 14px;
             border-radius: 20px;
             text-decoration: none;
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             transition: opacity 0.2s;
+            white-space: nowrap;
         }
 
         .btn-contato:hover {
             opacity: 0.9;
         }
 
-        /* Ícone das três linhas clicável */
         .menu-icon {
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             cursor: pointer;
             color: var(--text-titulo);
-            padding: 5px;
+            padding: 4px;
             user-select: none;
         }
 
-        /* --- SIDEBAR MENU (MENU LATERAL) --- */
+        /* --- SIDEBAR MENU --- */
         .sidebar {
             position: fixed;
             top: 0;
-            right: -320px; /* Escondido por padrão */
-            width: 300px;
+            right: -100%;
+            width: 100%;
+            max-width: 300px;
             height: 100vh;
             background-color: var(--sidebar-bg);
             border-left: 1px solid var(--border-color);
             box-shadow: -5px 0 25px rgba(0, 0, 0, 0.5);
             z-index: 9999;
-            padding: 30px;
+            padding: 25px;
             display: flex;
             flex-direction: column;
-            gap: 30px;
+            gap: 20px;
             transition: right 0.3s ease-in-out;
         }
 
-        /* Classe que ativa o menu */
         .sidebar.open {
             right: 0 !important; 
         }
 
         .sidebar-close {
             align-self: flex-end;
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             cursor: pointer;
             color: var(--text-titulo);
             background: none;
             border: none;
+            padding: 5px;
         }
 
         .sidebar-menu-list {
             list-style: none;
             display: flex;
             flex-direction: column;
-            gap: 20px;
-            margin-top: 20px;
+            gap: 15px;
+            margin-top: 10px;
         }
 
         .sidebar-menu-list li a {
             color: var(--text-titulo);
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: 600;
             text-decoration: none;
             display: block;
-            padding: 12px 0;
-            border-bottom: 1px solid transparent;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-color);
         }
 
         .sidebar-menu-list li a:hover {
             color: #3b82f6;
-            border-bottom-color: #3b82f6;
             padding-left: 5px;
         }
 
-        /* Fundo escurecido ao abrir o menu */
         .sidebar-overlay {
             position: fixed;
             top: 0;
@@ -227,50 +226,57 @@
         main {
             width: 100%;
             max-width: 950px;
-            padding: 40px 20px;
+            padding: 25px 16px;
+            flex: 1;
         }
 
         /* --- TÍTULO PRINCIPAL --- */
         .secao-titulo {
             text-align: center;
-            font-size: 2rem;
+            font-size: 1.6rem;
             font-weight: 700;
             color: var(--text-titulo);
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             letter-spacing: 0.5px;
         }
 
-        /* --- ABAS DE NAVEGAÇÃO --- */
+        /* --- ABAS DE NAVEGAÇÃO RESPONSIVAS --- */
         .tabs-container {
             background-color: var(--bg-subcard);
             padding: 6px;
-            border-radius: 30px;
+            border-radius: 16px;
             display: flex;
-            justify-content: space-between;
-            gap: 5px;
-            margin-bottom: 30px;
+            gap: 6px;
+            margin-bottom: 24px;
             border: 1px solid var(--border-color);
-            flex-wrap: wrap;
+            overflow-x: auto;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* IE/Edge */
+        }
+
+        .tabs-container::-webkit-scrollbar {
+            display: none; /* Chrome/Safari */
         }
 
         .tab-btn {
-            flex: 1;
-            min-width: 120px;
+            flex: 0 0 auto;
+            min-width: 140px;
             background: none;
             border: none;
             color: var(--text-secundario);
-            padding: 10px 15px;
-            border-radius: 25px;
+            padding: 10px 14px;
+            border-radius: 12px;
             cursor: pointer;
             font-weight: 500;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             text-align: center;
+            white-space: nowrap;
         }
 
         .tab-btn.active {
             background: linear-gradient(90deg, #1e40af, #3b82f6);
             color: #ffffff;
-            box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
+            box-shadow: 0 0 12px rgba(59, 130, 246, 0.4);
         }
 
         /* --- CARD DE CONTEÚDO --- */
@@ -278,9 +284,10 @@
             background-color: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 16px;
-            padding: 30px;
+            padding: 20px;
             backdrop-filter: blur(10px);
             display: none;
+            width: 100%;
         }
 
         .content-card.active {
@@ -289,59 +296,62 @@
         }
 
         .content-card h2 {
-            font-size: 1.8rem;
-            margin-bottom: 15px;
+            font-size: 1.4rem;
+            margin-bottom: 12px;
             color: var(--text-titulo);
         }
 
         .alert-box {
             background-color: var(--alert-bg);
             border-left: 4px solid var(--alert-border);
-            padding: 12px 15px;
-            border-radius: 4px;
-            margin-bottom: 20px;
-            font-size: 0.95rem;
+            padding: 10px 12px;
+            border-radius: 6px;
+            margin-bottom: 16px;
+            font-size: 0.9rem;
             color: var(--alert-text);
         }
 
         .description {
             color: var(--text-secundario);
-            line-height: 1.6;
-            margin-bottom: 25px;
-            font-size: 0.95rem;
+            line-height: 1.55;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
         }
 
         /* --- GRID --- */
         .info-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-bottom: 25px;
+            gap: 14px;
+            margin-bottom: 20px;
         }
 
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
             .info-grid {
                 grid-template-columns: 1fr;
+            }
+            .secao-titulo {
+                font-size: 1.4rem;
             }
         }
 
         .sub-card {
             background-color: var(--bg-subcard);
             border: 1px solid var(--border-color);
-            padding: 20px;
-            border-radius: 12px;
+            padding: 16px;
+            border-radius: 10px;
         }
 
         .sub-card h3 {
-            font-size: 1.1rem;
-            margin-bottom: 10px;
+            font-size: 1rem;
+            margin-bottom: 8px;
             color: var(--text-titulo);
         }
 
         .sub-card p {
             color: var(--text-secundario);
-            font-size: 0.85rem;
-            line-height: 1.5;
+            font-size: 0.82rem;
+            line-height: 1.45;
         }
 
         /* --- CHECKLIST --- */
@@ -349,23 +359,26 @@
             list-style: none;
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            margin-bottom: 35px;
+            gap: 10px;
+            margin-bottom: 25px;
         }
 
         .checklist li {
             display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 0.95rem;
+            align-items: flex-start;
+            gap: 8px;
+            font-size: 0.9rem;
             color: var(--text-principal);
+            line-height: 1.4;
         }
 
         .checklist li::before {
             content: "✓";
             color: #10b981;
             font-weight: bold;
-            font-size: 1.1rem;
+            font-size: 1rem;
+            flex-shrink: 0;
+            margin-top: 1px;
         }
 
         /* --- BOTÃO DE ORÇAMENTO --- */
@@ -378,17 +391,26 @@
         .btn-orcamento {
             background: linear-gradient(90deg, #2563eb, #3b82f6);
             color: #ffffff;
-            padding: 12px 32px;
-            border-radius: 30px;
+            padding: 12px 20px;
+            border-radius: 25px;
             text-decoration: none;
             font-weight: 600;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             border: none;
             cursor: pointer;
             box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 8px;
+            width: 100%;
+            text-align: center;
+        }
+
+        @media (min-width: 500px) {
+            .btn-orcamento {
+                width: auto;
+            }
         }
 
         .btn-orcamento:hover {
@@ -403,14 +425,14 @@
             right: 20px;
             background-color: #25d366;
             color: white;
-            width: 50px;
-            height: 50px;
+            width: 48px;
+            height: 48px;
             border-radius: 50px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            font-size: 1.4rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.35);
             text-decoration: none;
             z-index: 100;
         }
@@ -423,10 +445,10 @@
 </head>
 <body>
 
-    <!-- OVERLAY (Fundo escurecido) -->
+    <!-- OVERLAY -->
     <div class="sidebar-overlay" id="sidebarOverlay" onclick="fecharMenu()"></div>
 
-    <!-- SIDEBAR (MENU LATERAL CORRIGIDO E COM DIRECIONAMENTO) -->
+    <!-- SIDEBAR -->
     <nav class="sidebar" id="sidebarMenu">
         <button class="sidebar-close" onclick="fecharMenu()">✕</button>
         <ul class="sidebar-menu-list">
@@ -442,13 +464,11 @@
         <a href="index.html" class="logo">
            <img src="logo1.png" alt="Logo Protelares" class="logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
            <div class="logo-fallback" style="display: none;">PR</div>
-           <span>PROTELARES <br><small style="font-size: 0.6rem; color:#6b7280;">REDES E TELAS</small></span>
+           <span>PROTELARES <br><small style="font-size: 0.55rem; color:#6b7280; font-weight: normal;">REDES E TELAS</small></span>
         </a>
         <div class="nav-right">
             <button class="theme-toggle" id="themeBtn" onclick="toggleTheme()">🌙</button>
             <a href="https://wa.me/5511949063474?text=Olá!%20Gostaria%20de%20solicitar%20um%20orçamento." target="_blank" class="btn-contato">Orçamento</a>
-            
-            <!-- ÍCONE DAS TRÊS LINHAS COM CHAMADA DO SCRIPT CORRIGIDA -->
             <span class="menu-icon" onclick="abrirMenu()">☰</span>
         </div>
     </header>
@@ -576,9 +596,8 @@
         🗪
     </a>
 
-   <!-- JAVASCRIPT REESTRUTURADO E MELHORADO -->
+    <!-- JAVASCRIPT -->
     <script>
-        // Funções de gatilho para o menu lateral
         function abrirMenu() {
             document.getElementById('sidebarMenu').classList.add('open');
             document.getElementById('sidebarOverlay').classList.add('show');
@@ -589,7 +608,6 @@
             document.getElementById('sidebarOverlay').classList.remove('show');
         }
 
-        // Função para alternar as abas de serviços
         function switchTab(event, tabId) {
             const buttons = document.querySelectorAll('.tab-btn');
             buttons.forEach(btn => btn.classList.remove('active'));
@@ -601,14 +619,12 @@
             document.getElementById(tabId).classList.add('active');
         }
 
-        // Função para direcionar ao WhatsApp com mensagem personalizada
         function abrirOrcamento(servico) {
             const numeroTelefone = "5511949063474"; 
             const message = encodeURIComponent(`Olá! Gostaria de solicitar um orçamento para: ${servico}.`);
             window.open(`https://wa.me/${numeroTelefone}?text=${message}`, '_blank');
         }
 
-        // Função para alternar o tema e salvar no localStorage
         function toggleTheme() {
             const htmlElement = document.documentElement;
             const themeBtn = document.getElementById('themeBtn');
@@ -626,7 +642,6 @@
             }
         }
 
-        // Carregar o tema salvo pelo usuário ao iniciar a página
         window.addEventListener('DOMContentLoaded', () => {
             const savedTheme = localStorage.getItem('theme');
             const htmlElement = document.documentElement;
