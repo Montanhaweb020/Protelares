@@ -446,7 +446,7 @@
         </a>
         <div class="nav-right">
             <button class="theme-toggle" id="themeBtn" onclick="toggleTheme()">🌙</button>
-            <a href="#" class="btn-contato">Contato</a>
+            <a href="https://wa.me/5511949063474?text=Olá!%20Gostaria%20de%20solicitar%20um%20orçamento." target="_blank" class="btn-contato">Orçamento</a>
             
             <!-- ÍCONE DAS TRÊS LINHAS COM CHAMADA DO SCRIPT CORRIGIDA -->
             <span class="menu-icon" onclick="abrirMenu()">☰</span>
@@ -576,9 +576,9 @@
         🗪
     </a>
 
-   <!-- JAVASCRIPT REESTRUTURADO -->
+   <!-- JAVASCRIPT REESTRUTURADO E MELHORADO -->
     <script>
-        // Funções de gatilho reconstruídas com manipulação direta de classes
+        // Funções de gatilho para o menu lateral
         function abrirMenu() {
             document.getElementById('sidebarMenu').classList.add('open');
             document.getElementById('sidebarOverlay').classList.add('show');
@@ -589,6 +589,7 @@
             document.getElementById('sidebarOverlay').classList.remove('show');
         }
 
+        // Função para alternar as abas de serviços
         function switchTab(event, tabId) {
             const buttons = document.querySelectorAll('.tab-btn');
             buttons.forEach(btn => btn.classList.remove('active'));
@@ -600,12 +601,14 @@
             document.getElementById(tabId).classList.add('active');
         }
 
+        // Função para direcionar ao WhatsApp com mensagem personalizada
         function abrirOrcamento(servico) {
             const numeroTelefone = "5511949063474"; 
             const message = encodeURIComponent(`Olá! Gostaria de solicitar um orçamento para: ${servico}.`);
             window.open(`https://wa.me/${numeroTelefone}?text=${message}`, '_blank');
         }
 
+        // Função para alternar o tema e salvar no localStorage
         function toggleTheme() {
             const htmlElement = document.documentElement;
             const themeBtn = document.getElementById('themeBtn');
@@ -614,12 +617,31 @@
                 htmlElement.classList.remove('dark-mode');
                 htmlElement.classList.add('light-mode');
                 themeBtn.textContent = "☀️";
+                localStorage.setItem('theme', 'light-mode');
+            } else {
+                htmlElement.classList.remove('light-mode');
+                htmlElement.classList.add('dark-mode');
+                themeBtn.textContent = "🌙";
+                localStorage.setItem('theme', 'dark-mode');
+            }
+        }
+
+        // Carregar o tema salvo pelo usuário ao iniciar a página
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme');
+            const htmlElement = document.documentElement;
+            const themeBtn = document.getElementById('themeBtn');
+
+            if (savedTheme === 'light-mode') {
+                htmlElement.classList.remove('dark-mode');
+                htmlElement.classList.add('light-mode');
+                themeBtn.textContent = "☀️";
             } else {
                 htmlElement.classList.remove('light-mode');
                 htmlElement.classList.add('dark-mode');
                 themeBtn.textContent = "🌙";
             }
-        }
+        });
     </script>
-    </body>
-    </html>
+</body>
+</html>
