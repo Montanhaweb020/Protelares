@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark-mode">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Protelares - Redes e Telas</title>
+    <style>
+        /* --- VARIÁVEIS DE COR (MODO ESCURO POR PADRÃO) --- */
+        :root {
+            --bg-principal: #030712;
+            --bg-gradient: radial-gradient(circle at top right, #0b1528, #030712 60%);
+            --bg-card: rgba(17, 24, 39, 0.7);
+            --bg-subcard: #111827;
+            --border-color: #1f2937;
+            --text-principal: #f3f4f6;
+            --text-secundario: #9ca3af;
+            --text-titulo: #ffffff;
+            --alert-bg: rgba(30, 58, 138, 0.4);
+            --alert-text: #93c5fd;
+            --alert-border: #3b82f6;
+            --btn-contato-bg: #ffffff;
+            --btn-contato-text: #030712;
+            --sidebar-bg: #111827;
+        }
+
+        /* --- CONFIGURAÇÃO DO MODO CLARO --- */
+        html.light-mode {
+            --bg-principal: #f3f4f6;
+            --bg-gradient: radial-gradient(circle at top right, #e0e7ff, #f3f4f6 60%);
+            --bg-card: rgba(255, 255, 255, 0.85);
+            --bg-subcard: #ffffff;
+            --border-color: #d1d5db;
+            --text-principal: #1f2937;
+            --text-secundario: #4b5563;
+            --text-titulo: #111827;
+            --alert-bg: rgba(219, 234, 254, 0.7);
+            --alert-text: #1e40af;
+            --alert-border: #3b82f6;
+            --btn-contato-bg: #111827;
+            --btn-contato-text: #ffffff;
+            --sidebar-bg: #ffffff;
+        }
+
+        /* --- RESET --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+
+        body {
+            background-color: var(--bg-principal);
+            color: var(--text-principal);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: var(--bg-gradient);
+            overflow-x: hidden;
+        }
+
+        /* --- HEADER / NAV BAR --- */
+        header {
+            width: 100%;
+            max-width: 1200px;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            position: relative;
+            z-index: 10;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+            color: var(--text-titulo);
+            text-decoration: none;
+        }
+
+        /* --- LOGO CORRIGIDO --- */
+        .logo-img {
+            height: 40px;
+            width: auto;
+            object-fit: contain;
+            display: block;
+        }
+
+        .logo-fallback {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            font-weight: 800;
+            border: 1px solid #60a5fa;
+            color: #fff;
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            font-size: 1.3rem;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-contato {
+            background-color: var(--btn-contato-bg);
+            color: var(--btn-contato-text);
+            padding: 8px 16px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: opacity 0.2s;
+        }
+
+        .btn-contato:hover {
+            opacity: 0.9;
+        }
+
+        /* Ícone das três linhas clicável */
+        .menu-icon {
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: var(--text-titulo);
+            padding: 5px;
+            user-select: none;
+        }
+
+        /* --- SIDEBAR MENU (MENU LATERAL) --- */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: -320px; /* Escondido por padrão */
+            width: 300px;
+            height: 100vh;
+            background-color: var(--sidebar-bg);
+            border-left: 1px solid var(--border-color);
+            box-shadow: -5px 0 25px rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            transition: right 0.3s ease-in-out;
+        }
+
+        /* Classe que ativa o menu */
+        .sidebar.open {
+            right: 0 !important; 
+        }
+
+        .sidebar-close {
+            align-self: flex-end;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: var(--text-titulo);
+            background: none;
+            border: none;
+        }
+
+        .sidebar-menu-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .sidebar-menu-list li a {
+            color: var(--text-titulo);
+            font-size: 1.3rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: block;
+            padding: 12px 0;
+            border-bottom: 1px solid transparent;
+        }
+
+        .sidebar-menu-list li a:hover {
+            color: #3b82f6;
+            border-bottom-color: #3b82f6;
+            padding-left: 5px;
+        }
+
+        /* Fundo escurecido ao abrir o menu */
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(3px);
+            z-index: 9998;
+            display: none;
+        }
+
+        .sidebar-overlay.show {
+            display: block !important;
+        }
+
+        /* --- CONTAINER PRINCIPAL --- */
+        main {
+            width: 100%;
+            max-width: 950px;
+            padding: 40px 20px;
+        }
+
+        /* --- TÍTULO PRINCIPAL --- */
+        .secao-titulo {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-titulo);
+            margin-bottom: 25px;
+            letter-spacing: 0.5px;
+        }
+
+        /* --- ABAS DE NAVEGAÇÃO --- */
+        .tabs-container {
+            background-color: var(--bg-subcard);
+            padding: 6px;
+            border-radius: 30px;
+            display: flex;
+            justify-content: space-between;
+            gap: 5px;
+            margin-bottom: 30px;
+            border: 1px solid var(--border-color);
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            flex: 1;
+            min-width: 120px;
+            background: none;
+            border: none;
+            color: var(--text-secundario);
+            padding: 10px 15px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(90deg, #1e40af, #3b82f6);
+            color: #ffffff;
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
+        }
+
+        /* --- CARD DE CONTEÚDO --- */
+        .content-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            display: none;
+        }
+
+        .content-card.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .content-card h2 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: var(--text-titulo);
+        }
+
+        .alert-box {
+            background-color: var(--alert-bg);
+            border-left: 4px solid var(--alert-border);
+            padding: 12px 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+            color: var(--alert-text);
+        }
+
+        .description {
+            color: var(--text-secundario);
+            line-height: 1.6;
+            margin-bottom: 25px;
+            font-size: 0.95rem;
+        }
+
+        /* --- GRID --- */
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        @media (max-width: 600px) {
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .sub-card {
+            background-color: var(--bg-subcard);
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        .sub-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: var(--text-titulo);
+        }
+
+        .sub-card p {
+            color: var(--text-secundario);
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+
+        /* --- CHECKLIST --- */
+        .checklist {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 35px;
+        }
+
+        .checklist li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95rem;
+            color: var(--text-principal);
+        }
+
+        .checklist li::before {
+            content: "✓";
+            color: #10b981;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        /* --- BOTÃO DE ORÇAMENTO --- */
+        .cta-container {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .btn-orcamento {
+            background: linear-gradient(90deg, #2563eb, #3b82f6);
+            color: #ffffff;
+            padding: 12px 32px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-orcamento:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.6);
+        }
+
+        /* --- WHATSAPP FLUTUANTE --- */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #25d366;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            text-decoration: none;
+            z-index: 100;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- OVERLAY (Fundo escurecido) -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="fecharMenu()"></div>
+
+    <!-- SIDEBAR (MENU LATERAL CORRIGIDO E COM DIRECIONAMENTO) -->
+    <nav class="sidebar" id="sidebarMenu">
+        <button class="sidebar-close" onclick="fecharMenu()">✕</button>
+        <ul class="sidebar-menu-list">
+            <li><a href="index.html">Início</a></li>
+            <li><a href="servicos.html">Serviços</a></li>
+            <li><a href="projetos.html">Projetos</a></li>
+            <li><a href="depoimentos.html">Depoimentos</a></li>
+        </ul>
+    </nav>
+
+    <!-- HEADER -->
+    <header>
+        <a href="index.html" class="logo">
+           <img src="logo1.png" alt="Logo Protelares" class="logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+           <div class="logo-fallback" style="display: none;">PR</div>
+           <span>PROTELARES <br><small style="font-size: 0.6rem; color:#6b7280;">REDES E TELAS</small></span>
+        </a>
+        <div class="nav-right">
+            <button class="theme-toggle" id="themeBtn" onclick="toggleTheme()">🌙</button>
+            <a href="#" class="btn-contato">Contato</a>
+            
+            <!-- ÍCONE DAS TRÊS LINHAS COM CHAMADA DO SCRIPT CORRIGIDA -->
+            <span class="menu-icon" onclick="abrirMenu()">☰</span>
+        </div>
+    </header>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main>
+        
+        <h1 class="secao-titulo">Nossas Soluções Premium</h1>
+        
+        <!-- ABAS -->
+        <div class="tabs-container">
+            <button class="tab-btn active" onclick="switchTab(event, 'tela-mosqueteira')">Tela Mosqueteira</button>
+            <button class="tab-btn" onclick="switchTab(event, 'varal-aluminio')">Varal de Alumínio</button>
+            <button class="tab-btn" onclick="switchTab(event, 'redes-protecao')">Redes de Proteção</button>
+            <button class="tab-btn" onclick="switchTab(event, 'redes-piscinas')">Redes em Piscinas</button>
+        </div>
+
+        <!-- CONTEÚDO: TELA MOSQUETEIRA -->
+        <div id="tela-mosqueteira" class="content-card active">
+            <h2>Tela Mosqueteira Anti-Insetos</h2>
+            <div class="alert-box">
+                Proporcionamos 100% de vedação contra insetos com engenharia sob medida.
+            </div>
+            <p class="description">
+                Estrutura robusta desenvolvida em alumínio de alta qualidade que acompanha a tonalidade exata das suas janelas. Utilizamos tela de fibra de vidro antichamas de altíssima resistência, impedindo o ressecamento causado pelo calor e garantindo uma durabilidade superior a 10 anos com os devidos cuidados. O acabamento milimétrico integra-se à esquadria de forma inteiramente sob medida.
+            </p>
+            <div class="info-grid">
+                <div class="sub-card">
+                    <h3>Cores Disponíveis</h3>
+                    <p>Alumínio nas opções: Brilhante, Branco, Preto, Fosco e Bronze.</p>
+                </div>
+                <div class="sub-card">
+                    <h3>Modelos Sob Medida</h3>
+                    <p>Telas de correr, fixas com travas ou modelos de encaixe inteiramente customizados.</p>
+                </div>
+            </div>
+            <ul class="checklist">
+                <li>Fabricação própria sob medida com o melhor preço do mercado</li>
+                <li>Instalação limpa e adaptada para a melhor visibilidade do cliente</li>
+                <li>Malhas de alta qualidade que aceitam lavagens</li>
+            </ul>
+            <div class="cta-container">
+                <button class="btn-orcamento" onclick="abrirOrcamento('Tela Mosqueteira Sob Medida')">
+                    Solicitar Orçamento via WhatsApp
+                </button>
+            </div>
+        </div>
+
+        <!-- CONTEÚDO: VARAL DE ALUMÍNIO -->
+        <div id="varal-aluminio" class="content-card">
+            <h2>Varal de Alumínio</h2>
+            <div class="alert-box">
+                Sistemas modernos, práticos e sob medida para otimizar o espaço da sua lavanderia.
+            </div>
+            <p class="description">
+                Modelos de teto, parede ou individuais produzidos sob medida e integralmente em alumínio com pintura eletrostática. Não enferrujam e possuem sistema de carretilhas suave para reduzir o espaço físico.
+            </p>
+            <ul class="checklist">
+                <li>Alta resistência a peso e dimensionamento customizado</li>
+                <li>Roldanas com rolamento suave</li>
+                <li>Garantia contra ferrugem</li>
+            </ul>
+            <div class="cta-container">
+                <button class="btn-orcamento" onclick="abrirOrcamento('Varal de Alumínio Sob Medida')">
+                    Solicitar Orçamento via WhatsApp
+                </button>
+            </div>
+        </div>
+
+        <!-- CONTEÚDO: REDES DE PROTEÇÃO -->
+        <div id="redes-protecao" class="content-card">
+            <h2>Redes de Proteção</h2>
+            <div class="alert-box">
+                Segurança máxima e planejada sob medida para sua família e seus animais de estimação.
+            </div>
+            <p class="description">
+                Instalação de redes certificadas pelas normas de segurança, moldadas sob medida com nós de alta resistência e tratamento contra raios UV e fatores climáticos para qualquer tipo de vão ou janela.
+            </p>
+            <ul class="checklist">
+                <li>Testadas e aprovadas pelo INMETRO com recorte sob medida</li>
+                <li>Ganchos e buchas específicos para alta fixação</li>
+                <li>Indicado para janelas, sacadas e mezaninos</li>
+            </ul>
+            <div class="cta-container">
+                <button class="btn-orcamento" onclick="abrirOrcamento('Redes de Proteção Sob Medida')">
+                    Solicitar Orçamento via WhatsApp
+                </button>
+            </div>
+        </div>
+
+        <!-- CONTEÚDO: REDES EM PISCINAS -->
+        <div id="redes-piscinas" class="content-card">
+            <h2>Rede de Proteção para Piscinas</h2>
+            <div class="alert-box">
+                Evite acidentes domésticos como afogamento, proteja seus filhos com segurança total e projetos sob medida!
+            </div>
+            <p class="description">
+                Nossas redes oferecem proteção máxima fabricada sob medida para o formato exato da sua área de lazer. O material é tratado quimicamente para resistir ao calor, mantendo sua integridade. Além disso, a instalação conta com uma estrutura metálica robusta com barras de aço galvanizado 25 X 25 para uma ancoragem perfeita e estável.
+            </p>
+            <div class="info-grid">
+                <div class="sub-card">
+                    <h3>Alta Resistência</h3>
+                    <p>A rede é extremamente reforçada e suporta até 500 quilos de impacto/peso.</p>
+                </div>
+                <div class="sub-card">
+                    <h3>Personalização Completa</h3>
+                    <p>Estrutura sob medida com pintura manual realizada diretamente na cor desejada pelo cliente.</p>
+                </div>
+            </div>
+            <ul class="checklist">
+                <li>Segurança contra quedas acidentais em projetos adaptados sob medida</li>
+                <li>Barras de aço galvanizado ultra resistentes 25 X 25</li>
+                <li>Solicite seu projeto sob medida e sem compromisso diretamente conosco</li>
+            </ul>
+            <div class="cta-container">
+                <button class="btn-orcamento" onclick="abrirOrcamento('Rede de Proteção para Piscinas Sob Medida')">
+                    Solicitar Orçamento via WhatsApp
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <a href="https://wa.me/5511949063474" target="_blank" class="whatsapp-float">
+        🗪
+    </a>
+
+   <!-- JAVASCRIPT REESTRUTURADO -->
+    <script>
+        // Funções de gatilho reconstruídas com manipulação direta de classes
+        function abrirMenu() {
+            document.getElementById('sidebarMenu').classList.add('open');
+            document.getElementById('sidebarOverlay').classList.add('show');
+        }
+
+        function fecharMenu() {
+            document.getElementById('sidebarMenu').classList.remove('open');
+            document.getElementById('sidebarOverlay').classList.remove('show');
+        }
+
+        function switchTab(event, tabId) {
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            const cards = document.querySelectorAll('.content-card');
+            cards.forEach(card => card.classList.remove('active'));
+
+            event.currentTarget.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        function abrirOrcamento(servico) {
+            const numeroTelefone = "5511949063474"; 
+            const message = encodeURIComponent(`Olá! Gostaria de solicitar um orçamento para: ${servico}.`);
+            window.open(`https://wa.me/${numeroTelefone}?text=${message}`, '_blank');
+        }
+
+        function toggleTheme() {
+            const htmlElement = document.documentElement;
+            const themeBtn = document.getElementById('themeBtn');
+
+            if (htmlElement.classList.contains('dark-mode')) {
+                htmlElement.classList.remove('dark-mode');
+                htmlElement.classList.add('light-mode');
+                themeBtn.textContent = "☀️";
+            } else {
+                htmlElement.classList.remove('light-mode');
+                htmlElement.classList.add('dark-mode');
+                themeBtn.textContent = "🌙";
+            }
+        }
+    </script>
+    </body>
+    </html>

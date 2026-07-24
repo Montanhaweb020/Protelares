@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Protelares - Redes de Proteção e Telas Mosquiteiras</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,600;0,800;1,800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- VARIÁVEIS DE TEMA (MODO ESCURO POR PADRÃO) --- */
+        :root {
+            --bg-color: #050508; 
+            --card-bg: rgba(255, 255, 255, 0.02);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --text-color: #ffffff;
+            --primary-color: #3b30ff; 
+            --primary-glow: rgba(59, 48, 255, 0.3);
+            --secondary-color: #38b6ff;
+            --accent-green: #25d366;
+            --accent-gold: #ffcc00;
+            --text-muted: #94a3b8;
+            --font-family: 'Plus Jakarta Sans', sans-serif;
+            --header-bg: rgba(5, 5, 8, 0.75);
+            --hero-gradient-1: rgba(59, 48, 255, 0.3);
+            --hero-gradient-2: rgba(56, 182, 255, 0.08);
+            --card-hover-shadow: rgba(59, 48, 255, 0.1);
+            --btn-cta-text: #050508;
+            --invert-icons: 0;
+        }
+
+        /* --- CONFIGURAÇÕES DO MODO CLARO --- */
+        [data-theme="light"] {
+            --bg-color: #f8fafc; 
+            --card-bg: #ffffff;
+            --card-border: rgba(15, 23, 42, 0.08);
+            --text-color: #0f172a;
+            --primary-color: #2516ff; 
+            --primary-glow: rgba(59, 48, 255, 0.15);
+            --secondary-color: #0284c7;
+            --text-muted: #475569;
+            --header-bg: rgba(248, 250, 252, 0.8);
+            --hero-gradient-1: rgba(59, 48, 255, 0.08);
+            --hero-gradient-2: rgba(2, 132, 199, 0.05);
+            --card-hover-shadow: rgba(15, 23, 42, 0.05);
+            --btn-cta-text: #ffffff;
+        }
+
+        /* --- RESET & CONFIGS GERAIS --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: var(--font-family);
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 80% 20%, var(--hero-gradient-1) 0%, transparent 40%),
+                radial-gradient(circle at 10% 80%, var(--hero-gradient-2) 0%, transparent 30%);
+            background-attachment: fixed;
+        }
+
+        /* --- HEADER --- */
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 100;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--card-border);
+            background-color: var(--header-bg);
+        }
+
+        .header-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 24px;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-shield {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            flex-shrink: 0;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            padding: 6px;
+        }
+
+        .logo-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            text-transform: uppercase;
+            line-height: 1;
+            background: linear-gradient(135deg, var(--text-color) 30%, var(--secondary-color) 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        [data-theme="light"] .logo-text {
+            -webkit-text-fill-color: unset;
+            color: var(--text-color);
+            background: none;
+        }
+
+        .logo-text span {
+            display: block;
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            letter-spacing: 1.5px;
+            margin-top: 4px;
+            font-weight: 600;
+        }
+
+        /* --- BOTÃO CONTROLE DE TEMA --- */
+        .theme-toggle-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            color: var(--text-color);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: auto;
+            margin-right: 16px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .theme-toggle-btn svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        .theme-toggle-btn .sun-icon { display: none; }
+        [data-theme="light"] .theme-toggle-btn .moon-icon { display: none; }
+        [data-theme="light"] .theme-toggle-btn .sun-icon { display: block; }
+
+        .btn-header-cta {
+            background: var(--text-color);
+            color: var(--btn-cta-text);
+            padding: 10px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+            margin-right: 24px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+        }
+
+        [data-theme="light"] .btn-header-cta {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-header-cta:hover {
+            transform: translateY(-2px);
+            background: var(--primary-color);
+            color: white;
+            box-shadow: 0 4px 20px var(--primary-glow);
+        }
+
+        /* --- HAMBURGER MENU --- */
+        .menu-toggle {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 26px;
+            height: 18px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            z-index: 110;
+        }
+
+        .menu-toggle .bar {
+            width: 100%;
+            height: 2px;
+            background-color: var(--text-color);
+            border-radius: 10px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .menu-toggle.active .bar:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+            background-color: var(--secondary-color);
+        }
+
+        .menu-toggle.active .bar:nth-child(2) {
+            opacity: 0;
+            transform: scale(0);
+        }
+
+        .menu-toggle.active .bar:nth-child(3) {
+            transform: translateY(-8px) rotate(-45deg);
+            background-color: var(--secondary-color);
+        }
+
+        .nav-links {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 300px;
+            height: 100vh;
+            background-color: var(--bg-color);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-left: 1px solid var(--card-border);
+            display: flex;
+            flex-direction: column;
+            padding: 120px 40px;
+            gap: 20px;
+            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 105;
+        }
+
+        .nav-links.active {
+            right: 0;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: 600;
+            transition: all 0.2s;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary-color);
+            padding-left: 8px;
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 160px 24px 80px 24px;
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+
+        .badge-local {
+            color: var(--secondary-color);
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(56, 182, 255, 0.1);
+            padding: 6px 16px;
+            border-radius: 50px;
+            width: fit-content;
+            border: 1px solid rgba(56, 182, 255, 0.2);
+        }
+
+        .badge-local::before {
+            content: '';
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            background-color: var(--secondary-color);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--secondary-color);
+        }
+
+        .hero-title {
+            font-size: 3.8rem;
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -1.5px;
+        }
+
+        .hero-title span {
+            background: linear-gradient(to right, var(--text-color), var(--secondary-color));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: block;
+            margin-top: 5px;
+        }
+
+        [data-theme="light"] .hero-title span {
+            -webkit-text-fill-color: unset;
+            color: var(--secondary-color);
+            background: none;
+        }
+
+        .hero-description {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            max-width: 540px;
+            line-height: 1.7;
+        }
+
+        .hero-footer {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            margin-top: 10px;
+        }
+
+        .btn-main-cta {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #1e10d4 100%);
+            color: white;
+            padding: 16px 36px;
+            border-radius: 16px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.05rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 10px 25px rgba(59, 48, 255, 0.25);
+        }
+
+        .btn-main-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px var(--primary-glow);
+            filter: brightness(1.1);
+        }
+
+        .warranty-badge {
+            font-weight: 800;
+            font-size: 2rem;
+            line-height: 1;
+            background: linear-gradient(135deg, var(--accent-gold) 0%, #cc9900 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        [data-theme="light"] .warranty-badge {
+            -webkit-text-fill-color: unset;
+            color: #cc9900;
+            background: none;
+        }
+
+        .warranty-badge span {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            margin-top: 4px;
+        }
+
+        .payment-callout {
+            background: linear-gradient(90deg, rgba(37, 211, 102, 0.1) 0%, transparent 100%);
+            border: 1px solid rgba(37, 211, 102, 0.2);
+            padding: 16px 24px;
+            border-radius: 16px;
+            margin-top: 24px;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            color: #16a34a;
+        }
+
+        .hero-image-container {
+            position: relative;
+            border: 1px solid var(--card-border);
+            border-radius: 32px;
+            overflow: hidden;
+            aspect-ratio: 4 / 5;
+            background-color: var(--card-bg);
+            width: 100%;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.2);
+        }
+
+        .hero-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.7s ease;
+        }
+
+        .hero-image-container:hover img {
+            transform: scale(1.04);
+        }
+
+        .image-overlay-box {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(to top, var(--bg-color) 30%, rgba(5,5,8,0.2) 70%, transparent 100%);
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .overlay-title {
+            color: var(--text-color);
+            font-weight: 700;
+            font-size: 1.6rem;
+        }
+
+        .overlay-subtitle {
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        .status-badge {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            background-color: rgba(16, 185, 129, 0.15);
+            color: #10b981;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            padding: 6px 14px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            backdrop-filter: blur(8px);
+        }
+
+        .status-badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background-color: #10b981;
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 8px #10b981;
+        }
+
+        /* --- SEÇÃO DE PRODUTOS --- */
+        .products-section {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 60px 24px;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 40px;
+            text-align: center;
+            letter-spacing: -1px;
+        }
+
+        .section-title span {
+            color: var(--secondary-color);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 32px;
+        }
+
+        .product-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 32px;
+            backdrop-filter: blur(8px);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--secondary-color);
+            box-shadow: 0 10px 30px var(--card-hover-shadow);
+        }
+
+        .product-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--secondary-color);
+        }
+
+        .product-card ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .product-card ul li {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            position: relative;
+            padding-left: 24px;
+        }
+
+        .product-card ul li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--accent-green);
+            font-weight: bold;
+        }
+
+        /* --- SEÇÃO CERTIFICAÇÃO --- */
+        .specs-section {
+            max-width: 1300px;
+            margin: 40px auto;
+            padding: 0 24px;
+        }
+
+        .specs-box {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 40px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .spec-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            max-width: 500px;
+        }
+
+        .spec-icon-box {
+            font-size: 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--card-border);
+            color: var(--secondary-color);
+        }
+
+        [data-theme="light"] .spec-icon-box {
+            background: rgba(0, 0, 0, 0.02);
+        }
+
+        .spec-text h4 {
+            font-size: 1.1rem;
+            margin-bottom: 4px;
+        }
+
+        .spec-text p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* --- BOTÃO FLUTUANTE DO WHATSAPP --- */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 24px rgba(37, 211, 102, 0.3);
+            z-index: 1000;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .whatsapp-float:hover {
+            transform: scale(1.1) translateY(-3px);
+            box-shadow: 0 12px 30px rgba(37, 211, 102, 0.5);
+        }
+
+        .whatsapp-float svg {
+            width: 28px;
+            height: 28px;
+            fill: white;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            max-width: 1300px;
+            margin: 80px auto 40px auto;
+            padding: 0 24px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--card-border);
+            padding-top: 32px;
+        }
+
+        .footer-cnpj {
+            font-size: 0.75rem;
+            margin-top: 8px;
+            opacity: 0.6;
+        }
+
+        /* --- RESPONSIVIDADE --- */
+        @media (max-width: 968px) {
+            .header-container { padding: 16px; }
+            .logo-text { font-size: 1.3rem; }
+            .btn-header-cta { padding: 8px 16px; font-size: 0.8rem; margin-right: 16px; }
+            .hero { grid-template-columns: 1fr; padding-top: 130px; padding-bottom: 40px; text-align: center; gap: 48px; }
+            .badge-local { margin: 0 auto; }
+            .hero-title { font-size: 2.8rem; }
+            .hero-description { margin: 0 auto; font-size: 1rem; }
+            .hero-footer { flex-direction: column; gap: 24px; }
+            .btn-main-cta { width: 100%; max-width: 360px; justify-content: center; }
+            .hero-image-container { max-width: 440px; margin: 0 auto; }
+            .specs-box { flex-direction: column; align-items: flex-start; }
+        }
+
+        @media (max-width: 500px) {
+            .theme-toggle-btn { margin-right: 8px; }
+            .btn-header-cta { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-container">
+            <div class="logo-area">
+                <div class="logo-shield">
+                    <img src="logo1.png" alt="Logo Protelares" class="logo-img">
+                </div>
+                <div class="logo-text">
+                    Protelares
+                    <span>Redes e Telas</span>
+                </div>
+            </div>
+
+            <button class="theme-toggle-btn" id="theme-toggle" aria-label="Mudar tema visual">
+                <svg class="moon-icon" viewBox="0 0 24 24"><path d="M12.3 22h-.1c-5.5 0-10-4.5-10-10 0-4.8 3.5-8.9 8.2-9.8.5-.1 1 .2 1.2.7.2.5 0 1.1-.4 1.4-2.4 1.7-3.7 4.4-3.7 7.3 0 3.9 2.7 7.3 6.6 8.2.5.1.9.6.9 1.1-.1.5-.5.9-1 1.1z"/></svg>
+                <svg class="sun-icon" viewBox="0 0 24 24"><path d="M12 7c-2.8 0-5 2.2-5 5s2.2 5 5 5 5-2.2 5-5-2.2-5-5-5zm0-5c.6 0 1 .4 1 1v1c0 .6-.4 1-1 1s-1-.4-1-1V3c0-.6.4-1 1-1zm0 15c.6 0 1 .4 1 1v1c0 .6-.4 1-1 1s-1-.4-1-1v-1c0-.6.4-1 1-1zM4 12c0-.6.4-1 1-1h1c.6 0 1 .4 1 1s-.4 1-1 1H5c-.6 0-1-.4-1-1zm12 0c0-.6.4-1 1-1h1c.6 0 1 .4 1 1s-.4 1-1 1h-1c-.6 0-1-.4-1-1z"/></svg>
+            </button>
+
+            <a href="#" class="btn-header-cta btn-whatsapp-trigger">
+                Orçamento
+            </a>
+
+            <button class="menu-toggle" id="mobile-menu" aria-label="Abrir menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+
+            <nav class="nav-links" id="nav-menu">
+                <a href="index.html">Início</a>
+                <a href="servicos.html">Serviços</a>
+                <a href="projetos.html">Projetos</a>
+                <a href="depoimentos.html">Depoimentos</a>
+            </nav>
+        </div>
+    </header>
+
+    <main id="inicio">
+        
+        <section class="hero">
+            <div class="hero-content">
+                <div class="badge-local">Especialista Da Zona Leste</div>
+                
+                <h1 class="hero-title">
+                    Redes de Proteção , Varais De Této , proteçoes de piscina ,estrutura metalicas e 
+                    <span>Telas Mosquiteiras</span>
+                </h1>
+
+                <p class="hero-description">
+                    Líder em segurança residencial e redes de proteção. Proteção certificada de alta resistência para apartamentos, telas mosquiteiras sob medida e soluções inteligentes como varais de teto premium. Atendimento ágil em toda a Grande SP e ABC.
+                </p>
+
+                <div class="hero-footer">
+                    <a href="#" class="btn-main-cta btn-whatsapp-trigger">
+                        Falar com Protelares ➔
+                    </a>
+                    <div class="warranty-badge">
+                        5 Anos
+                        <span>de Garantia</span>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="payment-callout">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>
+                        Parcelamos no Cartão
+                    </div>
+                </div>
+            </div>
+
+            <div class="hero-image-container">
+                <span class="status-badge">Marcelo está online</span>
+                <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=600" alt="Instalação de Rede de Proteção Premium">
+                
+                <div class="image-overlay-box">
+                    <div class="overlay-title">Qualidade Absoluta</div>
+                    <div class="overlay-subtitle">Tecnologia NBR 16046-1</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="products-section" id="produtos">
+            <h2 class="section-title">Nossas <span>Soluções</span></h2>
+            
+            <div class="products-grid">
+                <div class="product-card">
+                    <h3>Redes de Proteção</h3>
+                    <ul>
+                        <li>Rede de proteção em polietileno</li>
+                        <li>Garantia de qualidade: aditivadas</li>
+                        <li>Proteção contra raios ultravioleta</li>
+                        <li>Proteção total contra oxidação</li>
+                        <li>Alta durabilidade e resiliência mecânica</li>
+                        <li>Resistência testada em condições severas</li>
+                        <li>Redes acompanhadas com laudo técnico de tratamento</li>
+                    </ul>
+                </div>
+
+                <div class="product-card">
+                    <h3>Tela Mosquiteiro Anti-Insetos</h3>
+                    <ul>
+                        <li>Com estrutura robusta de alumínio</li>
+                        <li>Material totalmente anti-alérgico e lavável</li>
+                        <li>Confeccionado com tecido de fibra de vidro anti-chamas</li>
+                        <li>Todo o sistema é removível com 100% de vedação</li>
+                    </ul>
+                </div>
+
+                <div class="product-card">
+                    <h3>Varal de Teto</h3>
+                    <ul>
+                        <li>Varal de teto com design inteligente</li>
+                        <li>Otimização máxima de espaço físico</li>
+                        <li>Movimentação leve e ergonomia aprimorada</li>
+                        <li>Estrutura resistente com acabamento premium</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="specs-section" id="certificacoes">
+            <div class="specs-box">
+                <div class="spec-item">
+                    <div class="spec-icon-box">✓</div>
+                    <div class="spec-text">
+                        <h4>Normas Técnicas Oficiais</h4>
+                        <p>Atende a todos os requisitos da ABNT NBR 16046-1 para redes de proteção.</p>
+                    </div>
+                </div>
+
+                <div class="spec-item">
+                    <div class="spec-icon-box">🛡️</div>
+                    <div class="spec-text">
+                        <h4>Qualidade Comprovada</h4>
+                        <p>Laudo técnico integrado garantindo o tratamento correto anti-UV e anti-oxidação.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <a href="#" class="whatsapp-float btn-whatsapp-trigger" aria-label="Contato via WhatsApp">
+        <svg viewBox="0 0 24 24">
+            <path d="M12.004 2c-5.523 0-10 4.477-10 10 0 1.777.466 3.447 1.284 4.897L2 22l5.247-1.378A9.954 9.954 0 0 0 12.004 22c5.523 0 10-4.477 10-10s-4.477-10-10-10zm5.666 14.16c-.244.689-1.215 1.265-1.743 1.323-.473.053-.948.077-1.385-.067-.282-.093-.628-.216-1.06-.401-1.848-.79-3.04-2.662-3.132-2.785-.093-.123-.761-.914-.761-1.743 0-.83.435-1.237.59-1.403.155-.166.337-.208.45-.208.112 0 .225 0 .323.005.103.005.24.039.367.347.128.309.439 1.07.478 1.148.039.078.064.167.01.274-.054.108-.083.176-.166.274-.083.098-.176.216-.25.294-.088.083-.181.171-.078.347.103.176.455.753.973 1.213.665.592 1.223.778 1.394.866.171.088.274.073.376-.044.103-.117.435-.504.553-.675.117-.171.235-.142.396-.083.161.059 1.022.484 1.198.572.176.088.294.132.337.206.044.073.044.425-.2.112z"/>
+        </svg>
+    </a>
+
+    <footer>
+        <p>&copy; 2026 PROTELARES - Redes de Proteção e Telas Mosquiteiras. Todos os direitos reservados.</p>
+        <p class="footer-cnpj">GRÁFICA PROTELARES: 035254-43542</p>
+    </footer>
+
+    <script>
+        // --- LOGICA DE CONTROLE DO TEMA (CLARO/ESCURO) ---
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        
+        // Verifica se o usuário já tem uma preferência gravada ou usa o padrão do sistema
+        const currentTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+        
+        // Aplica o tema inicial
+        document.documentElement.setAttribute('data-theme', currentTheme);
+
+        themeToggleBtn.addEventListener('click', () => {
+            let theme = document.documentElement.getAttribute('data-theme');
+            let newTheme = theme === 'dark' ? 'light' : 'dark';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        });
+
+        // --- LÓGICA DO MENU ---
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navMenu = document.getElementById('nav-menu');
+        const navLinks = document.querySelectorAll('.nav-links a');
+
+        mobileMenu.addEventListener('click', () => {
+            mobileMenu.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+
+        // --- DISPARO DE MENSAGEM NO WHATSAPP ---
+        const whatsappButtons = document.querySelectorAll('.btn-whatsapp-trigger');
+        
+        whatsappButtons.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                const phoneNumber = "5511949063474"; 
+                const message = "Olá, Protelares! Acessei o site da Protélares e gostaria de solicitar um orçamento sem compromisso para Redes de Proteção / Telas Mosquiteiras.";
+                
+                const encodedMessage = encodeURIComponent(message);
+                const whatsappUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodedMessage}`;
+                
+                window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+            });
+        });
+    </script>
+
+</body>
+</html>
